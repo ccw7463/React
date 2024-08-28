@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Header = () => {
+const Header = ({ isSidebarOpen }) => {
   return (
-    <div className="header">
-      <h1>ChatBot UI Test</h1>
+    <div className={`header ${isSidebarOpen ? 'header-open' : 'header-closed'}`}>
+      <h1>AtlasBot</h1>
     </div>
   );
 };

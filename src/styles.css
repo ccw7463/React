@@ -1,24 +1,24 @@
 /* 기본 설정 */
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f6;
-  color: #333;
-  overflow: hidden; /* 스크롤바 생기는 것을 방지 */
+  font-family: 'Inter', sans-serif; 
+  background: linear-gradient(135deg, #0f0e17, #1b1f36); /* 그라데이션 배경 */
+  color: #e0e0e0; 
+  overflow: hidden;
 }
 
 .App {
   display: flex;
-  height: 100vh; /* 뷰포트 전체 높이를 차지 */
-  overflow: hidden; /* 컨텐츠 오버플로우 시 숨김 처리 */
+  height: 100vh; 
+  overflow: hidden; 
 }
 
 .sidebar-open .main-content {
-  margin-left: 250px; /* 사이드바가 열렸을 때의 마진 */
+  margin-left: 250px; 
 }
 
 .sidebar-closed .main-content {
-  margin-left: 50px; /* 사이드바가 닫혔을 때의 마진 */
+  margin-left: 80px; /* 사이드바가 닫혔을 때의 마진 */
 }
 
 /* 사이드바 스타일 */
@@ -27,71 +27,122 @@ body {
   top: 0;
   left: 0;
   width: 250px;
-  background-color: #f9a825; /* 5. 사이드바: 조금 진한 파스텔톤 주황색 */
-  color: white;
+  background-color: #1a1c29; 
+  color: #e0e0e0;
   padding: 20px;
   box-sizing: border-box;
-  height: 100vh; /* 사이드바 높이를 뷰포트 전체 높이로 설정 */
-  overflow-y: auto; /* 내용이 많아질 때 스크롤 */
-  transition: transform 0.3s ease, width 0.3s ease;
+  height: 100vh; 
+  overflow-y: auto; 
+  transition: width 0.3s ease; /* 사이드바 열고 닫을 때 부드럽게 애니메이션 */
+  z-index: 1000; /* 다른 요소 위에 위치 */
 }
 
 .sidebar.closed {
-  width: 50px;
+  width: 80px; /* 사이드바가 일부 너비를 남기고 접히도록 설정 */
 }
 
 .toggle-button {
-  position: absolute;
+  position: absolute; /* 사이드바 내부에 고정 */
   top: 10px;
-  right: -25px;
-  background-color: #2980b9;
+  left: 10px;
+  background-color: #2d2f42; 
   color: white;
   border: none;
-  border-radius: 15px;
+  border-radius: 5px;
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 10px;
   outline: none;
-  transition: transform 0.3s ease;
+  z-index: 1100; /* 사이드바 위에 위치 */
 }
 
-.sidebar.closed .toggle-button {
-  right: -25px;
-  transform: rotate(180deg);
+.menu-buttons {
+  position: absolute;
+  top: 70px;
+  left: 5px;
+  color: white;
+  border: none;
+  border-radius: 0px;
+  cursor: pointer;
+  padding: 0px;
+  outline: none;
+  z-index: 1100; /* 사이드바 위에 위치 */  
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.sidebar.open .icon-button::after {
+  content: '새로운 채팅';
+  color: #888888; /* 연한 회색 텍스트 */
+  font-size: 16px;
+  margin-left: 10px;
 }
 
 .sidebar ul {
   list-style-type: none;
   padding: 0;
+  margin-top: 110px; /* Chat History 리스트와 아이콘 버튼 사이에 여백 추가 */
+  margin-left: 5px;
 }
 
 .sidebar ul li {
   padding: 10px 0;
   cursor: pointer;
+  color: #e0e0e0; 
 }
 
 .sidebar ul li:hover {
-  background-color: #ef6c00;
+  background-color: #2d2f42;
   padding-left: 5px;
+}
+
+/* 사이드바 하단 야간 모드 버튼 위치 */
+.sidebar-bottom {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 /* 메인 컨텐츠 스타일 */
 .main-content {
   flex-grow: 1;
-  background-color: #f9f9f9; /* 변경되지 않음 */
+  background-color: #0d0e17; /* 다크 모드 배경색 */
   overflow-y: auto; /* 메인 컨텐츠가 많아질 때 스크롤 */
   padding-bottom: 60px; /* 입력창 높이만큼의 패딩을 추가하여 내용이 가려지지 않도록 함 */
+  transition: margin-left 0.3s ease;
 }
 
 /* 헤더 스타일 */
 .header {
-  background-color: #1976d2; /* 6. 헤더 색깔: 어울리는 색깔 (짙은 파란색) */
-  color: white;
-  padding: 10px 20px;
+  background-color: #0d0e17; 
+  color: #e0e0e0;
+  padding: 14px 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: margin-left 0.3s ease; /* 사이드바 상태에 따른 애니메이션 */
+}
+
+.header-open {
+  margin-left: 0px; /* 사이드바가 열렸을 때의 마진 */
+}
+
+.header-closed {
+  margin-left: 40px; /* 사이드바가 닫혔을 때의 마진 */
 }
 
 .header h1 {
   margin: 0;
   font-size: 28px;
+  font-weight: bold;
+  color: #ffffff; /* 헤더 텍스트 색상 */
 }
 
 /* 채팅창 스타일 */
@@ -102,8 +153,35 @@ body {
   justify-content: flex-end; /* 하단에 고정 */
   padding: 20px;
   box-sizing: border-box;
-  background-color: #ffffff; /* 1. 채팅영역 색깔: 흰색 */
+  background-color: #0d0e17; /* 다크 모드 배경색 */
   overflow-y: auto; /* 채팅이 많아질 때 스크롤 */
+}
+
+/* 초기 메시지 스타일 */
+.initial-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* 채팅창 전체를 차지 */
+  text-align: center;
+  color: #e0e0e0; /* 초기 메시지 색상 */
+  opacity: 0.9;
+  margin-top: 20%; /* 문구를 더 아래로 이동시킴 */
+}
+
+.initial-message .greeting {
+  font-size: 52px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #3f5efb, #6a5ac4, #cc689c, #ff7b7b); /* 파스텔 톤의 그라데이션 */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.initial-message .subtext {
+  font-size: 46px;
+  color: #b0b0b0; /* 연한 회색 */
 }
 
 .messages-container {
@@ -126,12 +204,13 @@ body {
 }
 
 .message.user .message-content {
-  background-color: #ffcc80; /* 3. 사용자 입력: 조금 연한 파스텔 톤 주황색 */
-  color: white;
+  background-color: #3f5efb; /* 사용자의 메시지 배경색 */
+  color: #ffffff;
   border-radius: 20px 20px 0 20px;
-  padding: 10px 15px;
+  padding: 10px 50px;
   max-width: 60%;
   text-align: right; /* 텍스트를 우측 정렬 */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 메시지에 약간의 그림자 */
 }
 
 .message.bot {
@@ -140,52 +219,55 @@ body {
 }
 
 .message.bot .message-content {
-  background-color: #e0e0e0; /* 4. 답변: 조금 연한 파스텔 톤 회색 */
-  color: black;
+  background-color: #5e2edb; /* 봇 메시지의 배경색 */
+  color: #ffffff;
   border-radius: 20px 20px 20px 0;
-  padding: 10px 15px;
+  padding: 10px 50px;
   max-width: 60%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 메시지에 약간의 그림자 */
 }
 
-/* 입력창 스타일 */
+/* 메시지 입력창 스타일 */
 .input-box {
   position: fixed;
-  bottom: 0;
-  width: calc(100% - 250px); /* 사이드바의 넓이를 제외한 나머지 화면을 차지 */
-  padding: 10px 20px;
-  border-top: 1px solid #ddd;
-  background-color: #eeeeee; /* 2. 채팅입력창: 연한 회색 */
-  box-sizing: border-box;
+  bottom: 20px; /* 하단에서 약간 위로 띄움 */
+  left: 55%;
+  transform: translateX(-44%); /* 중앙 정렬 */
+  width: 70%; /* 창 크기의 60%만큼 차지 */
+  background-color: #1a1c29; /* 다크 모드 입력창 배경 */
+  border-radius: 30px; /* 타원형으로 만들기 위해 변경 */
   display: flex;
   align-items: center;
-  z-index: 1; /* 다른 요소 위에 위치하도록 설정 */
+  padding: 10px 20px;
+  box-sizing: border-box;
+  z-index: 1;
 }
 
-.sidebar.closed + .main-content .input-box {
-  width: calc(100% - 50px); /* 사이드바가 닫혔을 때의 넓이 조정 */
-}
 
 input[type="text"] {
   flex-grow: 1;
-  padding: 10px;
+  padding: 12px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #333;
   border-radius: 20px;
+  background-color: #2d2f42; /* 다크 모드 텍스트 입력 배경 */
+  color: #e0e0e0;
   outline: none;
 }
 
 button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #2980b9;
+  background: linear-gradient(90deg, #3f5efb, #5e2edb); /* 파스텔 톤의 그라데이션 */
   color: white;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   margin-left: 10px;
   outline: none;
+  transition: background 0.3s ease;
 }
 
 button:hover {
-  background-color: #3498db;
+  background: #4c4e70; /* 버튼 호버 시 색상 */
 }
