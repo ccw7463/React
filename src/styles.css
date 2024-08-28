@@ -1,0 +1,191 @@
+/* 기본 설정 */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f6;
+  color: #333;
+  overflow: hidden; /* 스크롤바 생기는 것을 방지 */
+}
+
+.App {
+  display: flex;
+  height: 100vh; /* 뷰포트 전체 높이를 차지 */
+  overflow: hidden; /* 컨텐츠 오버플로우 시 숨김 처리 */
+}
+
+.sidebar-open .main-content {
+  margin-left: 250px; /* 사이드바가 열렸을 때의 마진 */
+}
+
+.sidebar-closed .main-content {
+  margin-left: 50px; /* 사이드바가 닫혔을 때의 마진 */
+}
+
+/* 사이드바 스타일 */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  background-color: #f9a825; /* 5. 사이드바: 조금 진한 파스텔톤 주황색 */
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  height: 100vh; /* 사이드바 높이를 뷰포트 전체 높이로 설정 */
+  overflow-y: auto; /* 내용이 많아질 때 스크롤 */
+  transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.sidebar.closed {
+  width: 50px;
+}
+
+.toggle-button {
+  position: absolute;
+  top: 10px;
+  right: -25px;
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  padding: 5px 10px;
+  outline: none;
+  transition: transform 0.3s ease;
+}
+
+.sidebar.closed .toggle-button {
+  right: -25px;
+  transform: rotate(180deg);
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.sidebar ul li:hover {
+  background-color: #ef6c00;
+  padding-left: 5px;
+}
+
+/* 메인 컨텐츠 스타일 */
+.main-content {
+  flex-grow: 1;
+  background-color: #f9f9f9; /* 변경되지 않음 */
+  overflow-y: auto; /* 메인 컨텐츠가 많아질 때 스크롤 */
+  padding-bottom: 60px; /* 입력창 높이만큼의 패딩을 추가하여 내용이 가려지지 않도록 함 */
+}
+
+/* 헤더 스타일 */
+.header {
+  background-color: #1976d2; /* 6. 헤더 색깔: 어울리는 색깔 (짙은 파란색) */
+  color: white;
+  padding: 10px 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+/* 채팅창 스타일 */
+.chat-window {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* 하단에 고정 */
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #ffffff; /* 1. 채팅영역 색깔: 흰색 */
+  overflow-y: auto; /* 채팅이 많아질 때 스크롤 */
+}
+
+.messages-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 기본적으로 봇 메시지에 맞춰 정렬 */
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.message {
+  margin: 10px 0;
+  display: flex;
+  width: 100%;
+}
+
+.message.user {
+  justify-content: flex-end; /* 사용자 메시지를 우측 정렬 */
+  align-items: flex-start; /* 사용자 메시지를 상단에 고정 */
+}
+
+.message.user .message-content {
+  background-color: #ffcc80; /* 3. 사용자 입력: 조금 연한 파스텔 톤 주황색 */
+  color: white;
+  border-radius: 20px 20px 0 20px;
+  padding: 10px 15px;
+  max-width: 60%;
+  text-align: right; /* 텍스트를 우측 정렬 */
+}
+
+.message.bot {
+  justify-content: flex-start; /* 봇 메시지를 좌측 정렬 */
+  align-items: flex-end; /* 봇 메시지를 하단에 고정 */
+}
+
+.message.bot .message-content {
+  background-color: #e0e0e0; /* 4. 답변: 조금 연한 파스텔 톤 회색 */
+  color: black;
+  border-radius: 20px 20px 20px 0;
+  padding: 10px 15px;
+  max-width: 60%;
+}
+
+/* 입력창 스타일 */
+.input-box {
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 250px); /* 사이드바의 넓이를 제외한 나머지 화면을 차지 */
+  padding: 10px 20px;
+  border-top: 1px solid #ddd;
+  background-color: #eeeeee; /* 2. 채팅입력창: 연한 회색 */
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  z-index: 1; /* 다른 요소 위에 위치하도록 설정 */
+}
+
+.sidebar.closed + .main-content .input-box {
+  width: calc(100% - 50px); /* 사이드바가 닫혔을 때의 넓이 조정 */
+}
+
+input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+  outline: none;
+}
+
+button:hover {
+  background-color: #3498db;
+}
