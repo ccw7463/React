@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useState } from 'react';
 import ChatWindow from './components/ChatWindow';
 import Sidebar from './components/Sidebar';
@@ -7,9 +8,10 @@ import Login from './Login';
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
-  const [currentChatId, setCurrentChatId] = useState(null); 
-  const [messages, setMessages] = useState([]); 
-  const [showInitialMessage, setShowInitialMessage] = useState(true); 
+  const [currentChatId, setCurrentChatId] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [showInitialMessage, setShowInitialMessage] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -17,8 +19,8 @@ function App() {
 
   const handleChatHistoryClick = (chatId) => {
     setCurrentChatId(chatId);
-    setMessages([]); 
-    setShowInitialMessage(false); 
+    setMessages([]);
+    setShowInitialMessage(false);
   };
 
   const handleSend = (message) => {
@@ -29,10 +31,18 @@ function App() {
   };
 
   const startNewChat = () => {
-    setMessages([]); 
-    setCurrentChatId(null); 
-    setShowInitialMessage(true); 
+    setMessages([]);
+    setCurrentChatId(null);
+    setShowInitialMessage(true);
   };
+
+  const handleLogin = () => {
+    setIsLoggedIn(true); // 로그인 상태 변경
+  };
+
+  if (!isLoggedIn) {
+    return <Login onLogin={handleLogin} />; // 로그인되지 않았을 때 로그인 페이지를 표시
+  }
 
   return (
     <div className={`App ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
@@ -43,11 +53,11 @@ function App() {
         onStartNewChat={startNewChat}
       />
       <div className="main-content">
-        <Header isSidebarOpen={isSidebarOpen} /> {/* isSidebarOpen을 헤더에 전달 */}
+        <Header isSidebarOpen={isSidebarOpen} />
         <ChatWindow
-          initialMessages={messages} 
+          initialMessages={messages}
           onSend={handleSend}
-          showInitialMessage={showInitialMessage} 
+          showInitialMessage={showInitialMessage}
         />
       </div>
     </div>
